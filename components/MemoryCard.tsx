@@ -90,11 +90,11 @@ export default function MemoryCard({ memory, onDelete, onEdit }: Props) {
 const styles = StyleSheet.create({
   card: {
     marginHorizontal: 16,
-    marginVertical: 6,
-    padding: 16,
-    borderRadius: 20,
+    marginVertical: 4,
+    padding: 10,
+    borderRadius: 14,
     borderWidth: 1,
-    gap: 8,
+    gap: 4,
   },
   header: {
     flexDirection: 'row',
@@ -102,35 +102,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   categoryBadge: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
     borderRadius: 100,
   },
   categoryText: {
-    fontSize: 12,
+    fontSize: 10,
     fontFamily: 'Inter_600SemiBold',
   },
   headerActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: 2,
   },
   actionBtn: {
     padding: 4,
   },
   title: {
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: 'Inter_600SemiBold',
-    lineHeight: 22,
+    lineHeight: 18,
+    marginTop: 2,
   },
   description: {
-    fontSize: 14,
-    fontFamily: 'Inter_400Regular',
-    lineHeight: 20,
-  },
-  date: {
     fontSize: 12,
     fontFamily: 'Inter_400Regular',
-    marginTop: 2,
+    lineHeight: 16,
+  },
+  date: {
+    fontSize: 10,
+    fontFamily: 'Inter_400Regular',
+    marginTop: 1,
   },
 });

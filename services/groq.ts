@@ -1,4 +1,8 @@
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+
+const IS_WEB = typeof window !== 'undefined' && typeof window.document !== 'undefined';
+const FETCH_URL = IS_WEB ? 'https://corsproxy.io/?url=' + encodeURIComponent(GROQ_API_URL) : GROQ_API_URL;
+
 const MODEL = 'llama-3.3-70b-versatile';
 const MAX_RETRIES = 2;
 const RETRY_DELAY_MS = 1500;
@@ -87,7 +91,7 @@ export async function streamGroqResponse(
       if (!apiKey) throw new Error('API key not set');
 
       const response = await fetchWithTimeout(
-        GROQ_API_URL,
+        FETCH_URL,
         {
           method: 'POST',
           headers: {

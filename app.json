@@ -19,6 +19,7 @@
     "android": {
       "package": "com.kolly.arismobile",
       "backgroundColor": "#09090B",
+      "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#09090B"

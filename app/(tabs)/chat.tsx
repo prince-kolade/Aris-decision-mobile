@@ -449,6 +449,7 @@ export default function ChatScreen() {
         style={[
           styles.header,
           {
+            paddingTop: insets.top + 12,
             borderBottomColor: colors.border,
             backgroundColor: colors.card,
           },
@@ -474,7 +475,8 @@ export default function ChatScreen() {
 
       <KeyboardAvoidingView
         style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'android' ? TAB_BAR_HEIGHT : 0}
       >
         <FlatList
           ref={flatListRef}

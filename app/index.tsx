@@ -120,7 +120,7 @@ export default function SplashScreenEntry() {
         <Animated.Text
           style={[styles.tagline, subStyle, { color: colors.primary }]}
         >
-          Kolade \u2764\uFE0F Ari
+          Kolade ❤ Ari
         </Animated.Text>
       </Animated.View>
     </View>

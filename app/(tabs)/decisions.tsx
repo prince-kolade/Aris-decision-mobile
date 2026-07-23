@@ -207,6 +207,8 @@ const styles = StyleSheet.create({
   listContent: {
     padding: 16,
     gap: 12,
+    paddingBottom: 80,
+    flexGrow: 1,
   },
   decisionCard: {
     padding: 18,
