@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "ari-mobile",
     "userInterfaceStyle": "dark",
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/images/icon.png",
       "resizeMode": "contain",
@@ -38,9 +38,11 @@
     "experiments": {
       "typedRoutes": true
     },
+    "owner": "kolly01",
     "extra": {
+      "router": {},
       "eas": {
-        "projectId": "bb4d07cd-ad17-4549-af69-90238e9ebbcf"
+        "projectId": "dfb0029d-d57f-4e4f-b12c-014b79fdacd7"
       }
     }
   }
