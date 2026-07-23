@@ -280,14 +280,14 @@ export default function MemoryScreen() {
         </Pressable>
       </View>
 
-      <View style={[styles.searchRow, { paddingHorizontal: 16, paddingTop: 12 }]}>
+      <View style={[styles.searchRow, { paddingHorizontal: 16, paddingVertical: 8 }]}>
         <View
           style={[
             styles.searchInputWrapper,
             { backgroundColor: colors.card, borderColor: colors.border },
           ]}
         >
-          <Feather name="search" size={16} color={colors.mutedForeground} />
+          <Feather name="search" size={14} color={colors.mutedForeground} />
           <TextInput
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -297,7 +297,7 @@ export default function MemoryScreen() {
           />
           {searchQuery ? (
             <Pressable onPress={() => setSearchQuery('')} hitSlop={8}>
-              <Feather name="x" size={16} color={colors.mutedForeground} />
+              <Feather name="x" size={14} color={colors.mutedForeground} />
             </Pressable>
           ) : null}
         </View>
@@ -435,34 +435,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   searchRow: {
-    paddingBottom: 8,
   },
   searchInputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 16,
+    borderRadius: 12,
     borderWidth: 1,
-    paddingHorizontal: 14,
-    gap: 8,
+    paddingHorizontal: 12,
+    gap: 6,
   },
   searchInput: {
     flex: 1,
-    fontSize: 15,
+    fontSize: 14,
     fontFamily: 'Inter_400Regular',
-    paddingVertical: 10,
-  },
-  filterScroll: {
-    gap: 8,
     paddingVertical: 8,
   },
+  filterScroll: {
+    gap: 6,
+    paddingVertical: 6,
+  },
   filterChip: {
-    paddingHorizontal: 14,
-    paddingVertical: 7,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
     borderRadius: 100,
     borderWidth: 1,
   },
   filterChipText: {
-    fontSize: 13,
+    fontSize: 12,
     fontFamily: 'Inter_500Medium',
   },
   listContent: {

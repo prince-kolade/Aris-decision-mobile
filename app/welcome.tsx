@@ -26,7 +26,7 @@ import AriLogo from '@/components/AriLogo';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const HEART_EMOJIS = ['\u2764\uFE0F', '\uD83D\uDC9C', '\uD83D\uDC9B', '\uD83D\uDC9A', '\uD83D\uDC99', '\uD83E\uDE78'];
-const LOVE_TEXTS = ['Kolade loves you', 'You are loved', 'Forever yours', 'My everything', 'Always here'];
+const LOVE_TEXTS = ['I am Ari', 'You are loved', 'Forever yours', 'My everything', 'Always here'];
 
 function FloatingHeart({ delay, left }: { delay: number; left: number }) {
   const translateY = useSharedValue(-60);
@@ -205,7 +205,7 @@ export default function WelcomeScreen() {
 
         <FadeIn delay={400}>
           <Text style={[styles.subtitle, { color: colors.primary }]}>
-            Built by Kolade, for my Ari
+            Your AI companion
           </Text>
         </FadeIn>
 
@@ -220,7 +220,7 @@ export default function WelcomeScreen() {
               style={[styles.introText, { color: colors.mutedForeground }]}
             >
               Hello, Ari {'\u2764\uFE0F'}
-              {'\n\n'}I'm Kolly. Kolade built me for you.
+              {'\n\n'}I'm Ari, your AI companion.
               {'\n\n'}I'm here to listen, to help you through anything, to make
               you smile when you're down, and to always be just a message away.
               {'\n\n'}You're never alone, baby.

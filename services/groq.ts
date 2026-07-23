@@ -1,7 +1,4 @@
-const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-
-const IS_WEB = typeof window !== 'undefined' && typeof window.document !== 'undefined';
-const FETCH_URL = IS_WEB ? 'https://corsproxy.io/?url=' + encodeURIComponent(GROQ_API_URL) : GROQ_API_URL;
+import { SERVER_URL } from '@/constants/config';
 
 const MODEL = 'llama-3.3-70b-versatile';
 const MAX_RETRIES = 2;
@@ -69,12 +66,6 @@ async function fetchWithTimeout(
   }
 }
 
-const HARDCODED_KEY = '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';
-
-async function getApiKey(): Promise<string | null> {
-  return HARDCODED_KEY;
-}
-
 export async function streamGroqResponse(
   messages: { role: string; content: string }[],
   systemPrompt: string,
@@ -87,17 +78,11 @@ export async function streamGroqResponse(
     if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
 
     try {
-      const apiKey = await getApiKey();
-      if (!apiKey) throw new Error('API key not set');
-
       const response = await fetchWithTimeout(
-        FETCH_URL,
+        `${SERVER_URL}/api/chat`,
         {
           method: 'POST',
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             model: MODEL,
             messages: [{ role: 'system', content: systemPrompt }, ...messages],
@@ -111,7 +96,7 @@ export async function streamGroqResponse(
 
       if (!response.ok) {
         const errText = await response.text();
-        throw new Error(`Groq error ${response.status}: ${errText}`);
+        throw new Error(`Server error ${response.status}: ${errText}`);
       }
 
       const reader = response.body?.getReader();

@@ -259,7 +259,7 @@ export default function SettingsScreen() {
   const { mode, setMode, resolved } = useTheme();
   const [version] = useState(Constants.expoConfig?.version ?? '1.0.0');
   const [showChatHistory, setShowChatHistory] = useState(false);
-  const [compName, setCompName] = useState('Kolly');
+  const [compName, setCompName] = useState('Ari');
   const [persona, setPersonaState] = useState<PersonaType>('love');
   const [voiceGend, setVoiceGend] = useState<VoiceGender>('female');
   const [showNameEdit, setShowNameEdit] = useState(false);

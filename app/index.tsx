@@ -16,7 +16,7 @@ import AriLogo from '@/components/AriLogo';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const FLOATING_TEXTS = [
   '\u2764\uFE0F',
-  'Kolade loves you',
+  'I am Ari',
   '\u2764\uFE0F',
   'You are loved',
   '\u2764\uFE0F',
@@ -120,7 +120,7 @@ export default function SplashScreenEntry() {
         <Animated.Text
           style={[styles.tagline, subStyle, { color: colors.primary }]}
         >
-          Kolade ❤ Ari
+          Ari
         </Animated.Text>
       </Animated.View>
     </View>

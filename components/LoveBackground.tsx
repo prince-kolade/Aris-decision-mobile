@@ -13,12 +13,12 @@ import Animated, {
 const MESSAGES = [
   'Kolade loves you',
   'Kolade \u2764\uFE0F Ari',
-  'Kolade \uD83D\uDC9C Ari',
-  'Kolade \uD83D\uDC97 Ari',
-  'Kolade \uD83D\uDC9D Ari',
+  'I am Ari',
+  'You are loved',
+  'Always here',
+  'My Ari',
   'Always',
   'Forever yours',
-  'My Ari',
 ];
 
 function FloatingItem({

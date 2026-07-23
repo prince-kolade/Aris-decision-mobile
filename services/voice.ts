@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import { SERVER_URL } from '@/constants/config';
 
 export type VoiceProvider = 'groq' | 'system';
 
@@ -28,8 +29,6 @@ const defaultConfig: VoiceConfig = {
   model: 'whisper-large-v3',
 };
 
-const GROQ_API_KEY = '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';
-
 export function configureVoice(config: Partial<VoiceConfig>): void {
   const merged = { ...defaultConfig, ...config };
   currentService = createGroqVoiceService(merged);
@@ -43,7 +42,6 @@ export function getVoiceService(): VoiceService {
 }
 
 const IS_WEB = Platform.OS === 'web';
-const GROQ_WHISPER_URL = 'https://api.groq.com/openai/v1/audio/transcriptions';
 
 function createGroqVoiceService(config: VoiceConfig): VoiceService {
   return {
@@ -122,9 +120,8 @@ function createGroqVoiceService(config: VoiceConfig): VoiceService {
       }
       formData.append('model', 'whisper-large-v3');
 
-      const response = await fetch(GROQ_WHISPER_URL, {
+      const response = await fetch(`${SERVER_URL}/api/transcribe`, {
         method: 'POST',
-        headers: { Authorization: `Bearer ${GROQ_API_KEY}` },
         body: formData,
       });
 

@@ -52,26 +52,28 @@ const SWEET_NAMES = [
   'gorgeous',
   'cupcake',
   'baby',
-  'sexy',
   'love',
   'sweetheart',
   'darling',
   'Princess',
 ];
 
+const GREETING_SOURCES = ['', 'Greetings from Kolade. ', 'Kolade sends his love. '];
+
 function getGreeting(name: string): string {
   const hour = new Date().getHours();
   const sweet = SWEET_NAMES[Math.floor(Math.random() * SWEET_NAMES.length)];
-  if (hour < 12) return `Good morning, ${sweet}`;
-  if (hour < 17) return `Good afternoon, ${sweet}`;
-  return `Good evening, ${sweet}`;
+  const source = GREETING_SOURCES[Math.floor(Math.random() * GREETING_SOURCES.length)];
+  const time =
+    hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+  return `${source}${time}, ${sweet}`;
 }
 
 function makeGreeting(companionName: string): Message {
   return {
     id: generateId('greeting'),
     role: 'assistant',
-    content: `Hello, Ari. \u2764\uFE0F\n\nI'm ${companionName}.\n\nTell me, baby. What do you need? I'm here.`,
+    content: `Hello, Ari.\n\nI'm ${companionName}, your duplicate.\n\nTell me, what's on your mind?`,
     timestamp: Date.now(),
   };
 }
@@ -93,6 +95,7 @@ export default function ChatScreen() {
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isRecording, setIsRecording] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
   const [showCall, setShowCall] = useState(false);
   const [personalization, setPersonalization] =
     useState<Personalization | null>(null);
@@ -125,7 +128,7 @@ export default function ChatScreen() {
 
   const systemPrompt = useMemo(() => {
     const p = personalization ?? {
-      companionName: 'Kolly',
+      companionName: 'Ari',
       persona: 'love',
       voiceGender: 'female',
     };
@@ -178,7 +181,7 @@ export default function ChatScreen() {
 
   async function startNewConversation() {
     const newId = generateId('conv');
-    const name = personalization?.companionName ?? 'Kolly';
+    const name = personalization?.companionName ?? 'Ari';
     const greeting = makeGreeting(name);
     setConversationId(newId);
     setMessages([greeting]);
@@ -211,6 +214,7 @@ export default function ChatScreen() {
 
     if (isRecording) {
       setIsRecording(false);
+      setIsTranscribing(true);
       try {
         const voice = getVoiceService();
         const result = await voice.stopRecording();
@@ -220,6 +224,8 @@ export default function ChatScreen() {
         }
       } catch (e) {
         console.error('[Mic] Transcribe error:', e);
+      } finally {
+        setIsTranscribing(false);
       }
     } else {
       try {
@@ -439,7 +445,7 @@ export default function ChatScreen() {
   const reversedMessages = [...messages].reverse();
   const canSend = !!inputText.trim() && !isStreaming;
   const bottomPadding = insets.bottom + TAB_BAR_HEIGHT + 8;
-  const companionName = personalization?.companionName ?? 'Kolly';
+  const companionName = personalization?.companionName ?? 'Ari';
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -475,8 +481,8 @@ export default function ChatScreen() {
 
       <KeyboardAvoidingView
         style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'android' ? TAB_BAR_HEIGHT : 0}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? TAB_BAR_HEIGHT : 0}
       >
         <FlatList
           ref={flatListRef}
@@ -525,19 +531,27 @@ export default function ChatScreen() {
               { backgroundColor: colors.background, borderColor: colors.border },
             ]}
           >
-            <TextInput
-              ref={inputRef}
-              value={inputText}
-              onChangeText={setInputText}
-              placeholder={`Talk to ${companionName}...`}
-              placeholderTextColor={colors.mutedForeground}
-              style={[styles.input, { color: colors.foreground }]}
-              multiline
-              maxLength={2000}
-              blurOnSubmit={false}
-              onSubmitEditing={handleSend}
-              editable={!isStreaming}
-            />
+            {isTranscribing ? (
+              <View style={styles.transcribingRow}>
+                <Text style={[styles.transcribingText, { color: colors.mutedForeground }]}>
+                  Transcribing...
+                </Text>
+              </View>
+            ) : (
+              <TextInput
+                ref={inputRef}
+                value={inputText}
+                onChangeText={setInputText}
+                placeholder={`Talk to ${companionName}...`}
+                placeholderTextColor={colors.mutedForeground}
+                style={[styles.input, { color: colors.foreground }]}
+                multiline
+                maxLength={2000}
+                blurOnSubmit={false}
+                onSubmitEditing={handleSend}
+                editable={!isStreaming}
+              />
+            )}
             <Pressable
               onPress={() => setShowCall(true)}
               hitSlop={8}
@@ -671,6 +685,16 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     maxHeight: 120,
     paddingVertical: 4,
+  },
+  transcribingRow: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingVertical: 8,
+  },
+  transcribingText: {
+    fontSize: 14,
+    fontFamily: 'Inter_500Medium',
+    fontStyle: 'italic',
   },
   iconBtn: { paddingBottom: 4, paddingHorizontal: 6 },
   sendBtn: {
