@@ -15,6 +15,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { MemoryProvider } from '@/context/MemoryContext';
 import { ThemeProvider } from '@/context/ThemeContext';
+import { setupNotifications } from '@/services/notifications';
 
 void SplashScreen.preventAutoHideAsync();
 
@@ -39,11 +40,12 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    async function hide() {
+    async function init() {
       await SplashScreen.hideAsync();
+      await setupNotifications();
     }
     if (fontsLoaded || fontError) {
-      hide();
+      init();
     }
   }, [fontsLoaded, fontError]);
 

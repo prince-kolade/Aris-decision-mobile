@@ -1,8 +1,10 @@
+import { Platform } from 'react-native';
 import { SERVER_URL } from '@/constants/config';
 
 const MODEL = 'llama-3.3-70b-versatile';
 const MAX_RETRIES = 2;
 const RETRY_DELAY_MS = 1500;
+const IS_ANDROID = Platform.OS === 'android';
 
 export const DECISION_ADDON = `
 
@@ -86,7 +88,7 @@ export async function streamGroqResponse(
           body: JSON.stringify({
             model: MODEL,
             messages: [{ role: 'system', content: systemPrompt }, ...messages],
-            stream: true,
+            stream: !IS_ANDROID,
             max_tokens: 2048,
             temperature: 0.7,
           }),
@@ -97,6 +99,13 @@ export async function streamGroqResponse(
       if (!response.ok) {
         const errText = await response.text();
         throw new Error(`Server error ${response.status}: ${errText}`);
+      }
+
+      if (IS_ANDROID) {
+        const data = await response.json();
+        const fullContent = data.choices?.[0]?.message?.content ?? '';
+        if (fullContent) onChunk(fullContent);
+        return;
       }
 
       const reader = response.body?.getReader();

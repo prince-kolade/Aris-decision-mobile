@@ -32,19 +32,29 @@
     "web": {
       "favicon": "./assets/images/icon.png"
     },
+    "updates": {
+      "enabled": true,
+      "fallbackToCacheTimeout": 0,
+      "checkAutomatically": "ON_LOAD",
+      "url": "https://u.expo.dev/76a5acd6-a296-493f-a06b-fa2fe003c254"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      "expo-updates"
     ],
     "experiments": {
       "typedRoutes": true
     },
-    "owner": "kolly01",
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "dfb0029d-d57f-4e4f-b12c-014b79fdacd7"
+        "projectId": "76a5acd6-a296-493f-a06b-fa2fe003c254"
       }
-    }
+    },
+    "owner": "kolex01"
   }
 }
